@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}My Top 10 Movies{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">My Top 10 Movies</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item space">
+                <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+            </li>
+            <li class="nav-item spacee">
+                <span class="navbar-text">{{ current_user.name }}</span>
+            </li>
+            <li class="nav-item spacee">
+                <span class="navbar-text">{{ current_user.email }}</span>
+            </li>
+        </ul>
+    </div>
+</nav>
+  <p class="description"></p>
+<div class="container">
+  <h1 class="heading">My Top 10 Movies</h1>
+  <p class="description">These are my all-time favourite movies.</p>
+   {% for movie in movies %}
+  <div class="card" >
+    <div class="front" style="background-image: url('{{ movie.img_url }}');">
+        <p class="large">{{ movie.ranking }}</p>
+    </div>
+    <div class="back">
+      <div>
+    <div class="title">{{ movie.title }} <span class="release_date">({{ movie.year }})</span></div>
+        <div class="rating">
+            <label>{{ movie.rating }}</label>
+          <i class="fas fa-star star"></i>
+        </div>
+          <p class="review">"{{ movie.review }}"</p>
+        <p class="overview">
+          {{ movie.description }}
+        </p>
+        <a href="{{ url_for('rate_movie', id=movie.id) }}" class="button">Update</a>
+        <a href="{{ url_for('delete', id=movie.id) }}" class="button delete-button">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+<div class="container text-center add">
+<a href="{{ url_for('add_movie') }}" class="button">Add Movie</a>
+</div>
+
+{% endblock %}
